@@ -4,7 +4,7 @@
 # base notebook, contains Jupyter and relevant tools
 # See https://github.com/ucsd-ets/datahub-docker-stack/wiki/Stable-Tag 
 # for a list of the most current containers we maintain
-ARG BASE_CONTAINER=ucsdets/datahub-base-notebook:2022.3-stable
+ARG BASE_CONTAINER=ucsdets/datahub-base-notebook:2023.1-stable
 
 FROM $BASE_CONTAINER
 
@@ -20,7 +20,15 @@ USER jovyan
 
 # RUN conda install -y scikit-learn
 
-RUN pip install --no-cache-dir networkx scipy
+
+RUN apt-get update && apt-get install -y \
+    software-properties-common \
+    npm
+RUN npm install npm@latest -g && \
+    npm install n -g && \
+    n latest
+RUN npm --version
+RUN npm install configurable-http-proxy configurable-http-proxy-redis-backend
 
 # Override command to disable running jupyter notebook at launch
 # CMD ["/bin/bash"]
