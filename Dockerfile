@@ -13,22 +13,13 @@ LABEL maintainer="UC San Diego ITS/ETS <ets-consult@ucsd.edu>"
 # 2) change to root to install packages
 USER root
 
-RUN apt-get -y install htop
-
-# 3) install packages using notebook user
-USER jovyan
-
-# RUN conda install -y scikit-learn
-
-
 RUN apt-get update && apt-get install -y \
     software-properties-common \
     npm
 RUN npm install npm@latest -g && \
     npm install n -g && \
     n latest
-RUN npm --version
-RUN npm install configurable-http-proxy configurable-http-proxy-redis-backend
 
-# Override command to disable running jupyter notebook at launch
-# CMD ["/bin/bash"]
+RUN npm --version
+RUN npm install -g  configurable-http-proxy configurable-http-proxy-redis-backend
+
